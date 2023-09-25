@@ -1,7 +1,6 @@
 package org.admin.catalog.domain.category;
 
 import org.admin.catalog.domain.AggregateRoot;
-import org.admin.catalog.domain.validation.CategoryValidator;
 import org.admin.catalog.domain.validation.ValidationHandler;
 
 import java.time.Instant;

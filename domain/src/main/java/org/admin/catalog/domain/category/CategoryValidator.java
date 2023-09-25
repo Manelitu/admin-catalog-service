@@ -1,6 +1,9 @@
-package org.admin.catalog.domain.validation;
+package org.admin.catalog.domain.category;
 
 import org.admin.catalog.domain.category.Category;
+import org.admin.catalog.domain.validation.Error;
+import org.admin.catalog.domain.validation.ValidationHandler;
+import org.admin.catalog.domain.validation.Validator;
 
 public class CategoryValidator extends Validator {
     public static final int NAME_MAX_LENGTH = 255;
