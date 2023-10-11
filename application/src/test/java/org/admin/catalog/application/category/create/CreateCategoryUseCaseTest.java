@@ -8,6 +8,9 @@ import org.mockito.Mockito;
 import java.util.Objects;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.*;
 
 public class CreateCategoryUseCaseTest {
     @Test
@@ -18,9 +21,9 @@ public class CreateCategoryUseCaseTest {
 
         final var command = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
 
-        final CategoryGateway categoryGateway = Mockito.mock(CategoryGateway.class);
-        Mockito
-                .when(categoryGateway.create(Mockito.any()))
+        final CategoryGateway categoryGateway = mock(CategoryGateway.class);
+
+        when(categoryGateway.create(any()))
                 .thenAnswer(returnsFirstArg());
 
         final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
@@ -30,16 +33,15 @@ public class CreateCategoryUseCaseTest {
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(categoryGateway, Mockito.times(1))
-                .create(Mockito.argThat(category -> {
-                    return Objects.equals(expectedName, category.getName())
+        Mockito.verify(categoryGateway, times(1)).create(argThat(category ->
+                    Objects.equals(expectedName, category.getName())
                             && Objects.equals(expectedDescription, category.getDescription())
                             && Objects.equals(expectedIsActive, category.getActive())
                             && Objects.nonNull(category.getId())
                             && Objects.nonNull(category.getCreatedAt())
                             && Objects.nonNull(category.getUpdatedAt())
-                            && Objects.isNull(category.getDeletedAt());
-                }));
+                            && Objects.isNull(category.getDeletedAt())
+                ));
     }
 
     // 2. Teste passando uma propriedade inválida
